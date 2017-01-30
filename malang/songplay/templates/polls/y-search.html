@@ -1,0 +1,42 @@
+
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+<div id="search-block">
+	<input type="search" class='y-searchbox'>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="{% static 'y-search.js' %}"></script>
+	<script src="{% static 'addrequest.js' %}"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+	<input type="submit" value="Go!" id="search-button">
+
+	<div id="sonuc" 
+		 width="480" 
+		 > </div>
+
+
+</div>
+
+<style>
+	
+
+#sonuc{
+	display: inline;
+	
+	background-color: red;
+
+
+}
+
+
+</style>
+</body>
+</html>

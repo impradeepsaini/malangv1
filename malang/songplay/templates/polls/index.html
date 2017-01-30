@@ -1,0 +1,189 @@
+{% extends "polls/basic.html" %}
+
+
+
+{%block myfilters%}
+
+	{% load staticfiles %}
+	{% load mathfilters %}
+	{%endblock%}
+
+{%block mainbody%}
+
+
+
+
+	<div id="youtube-player">
+	
+		<iframe id="myframe"
+        width="480" 
+        height="270"
+        frameborder="0"
+        style="border: solid 4px #37474F">
+        </iframe>
+        
+	    
+	
+	</div>
+
+	 
+	 
+
+
+	{% for object in request_objects %}
+	 	
+		<hr>
+		
+		<div id='{{object.id}}' class='col-xs-12 outer-request-container' style="margin-top:20px">
+	    	
+	    	<div  class= 'col-xs-1 thumbnail-container' >
+	    	
+	    		<img src="http://img.youtube.com/vi/{{object.youtubeId}}/1.jpg"/>
+	    		
+	    	 
+	    	</div>
+	    	
+	    	
+	    	
+	    	<div  class= 'col-xs-2 vote-container' >
+	    	
+	    		<div id="topic" class="upvote">
+    			<a class="upvote"></a>
+    			<span class="count">{{object.upvotes|sub:object.downvotes}}</span>
+    			<a class="downvote"></a>
+    			<a class="star"></a>
+				</div>
+	    	
+
+    		</div>
+
+
+    	<div  class='col-xs-9 request-container'>
+        
+        <br>    
+        	<h4 class="song-title">
+        
+        		<a href="#">{{object.song.name}}</a> 
+        		<span class="hidden-content" style="visibility:hidden">{{object.youtubeId}}</span>
+        		<span class="request-id" style="visibility:hidden">{{object.id}}</span>	
+        	</h4>     
+    	</div>
+			
+			
+		
+
+		</div>
+		<br>
+		<br>
+ 
+	{% endfor %}
+
+
+
+<div id="search-block" 
+		  
+         height="270">
+	<input type="search" class='y-searchbox'>
+	
+	<input type="submit" value="Go!" id="search-button">
+
+	<div id="sonuc"> </div>
+
+</div>
+
+
+{%endblock%}
+
+
+//css styling
+
+{%block mystyle%}
+
+	<style>
+		
+		 #youtube-player{
+		
+			margin-top:50px;
+			float:right;
+			
+		}
+	
+
+	#search-block{
+
+		position: absolute;
+		background-color: red;
+		max-width: 300px;
+		top:340px;
+		right: 0px;
+}
+
+
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('http://i.stack.imgur.com/FhHRx.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal {
+    display: block;
+}
+
+
+
+
+
+
+
+	</style>
+
+
+{%endblock mystyle%}
+
+ 
+{%block jscript%}
+
+<script src="{% static "youtubejscript.js" %}"></script>
+<script src="{% static "songplay_automation.js" %}"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="{% static 'y-search.js' %}"></script>
+<script src="{% static 'addrequest.js' %}"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+  
+{%endblock jscript%}
+
+
+
+ 
+<!--	<div><i class="fa fa-angle-up fa-2x" aria-hidden="true"></i></div> 
+        
+       		 	<div>{{object.upvotes|sub:object.downvotes}}</div>
+                   
+       			<div><i class="fa fa-angle-down fa-2x" aria-hidden="true"></i></div> -->
+
+
+ 
