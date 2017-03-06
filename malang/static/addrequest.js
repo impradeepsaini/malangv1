@@ -1,50 +1,49 @@
-
-
-
-
 $(document).ready(
 
-	function(){
-	
-		$(document).on("click",".add-button",function(){
+    function() {
 
-		var link 	=	$(this).siblings("a");
-		console.log(link.text());
+        $(document).on("click", ".add-button", function() {
 
-		var youtubeId = link.attr("href")
+            var link = $(this).siblings("a");
+            console.log(link.text());
 
-    	//then get everything after the found index
-    	var strOut = youtubeId.substr(32);
+            var youtubeId = link.attr("href")
 
-		title = link.text();
+            //then get everything after the found index
+            var strOut = youtubeId.substr(32);
 
-
-		$.ajax({
-
-			method:"POST",
-			url:"http://localhost:8000/add/",
-			
-			dataType:"jsonp",
-			data:{"youtubeId":strOut,"title":title},
-			success:function(data,textStatus,request){
+            title = link.text();
 
 
-				alert("successfully stored");
+            $.ajax({
+
+                method: "POST",
+                url: "http://localhost:8000/add/",
+
+                dataType: "jsonp",
+                data: {
+                    "youtubeId": strOut,
+                    "title": title
+                },
+                success: function(data, textStatus, request) {
 
 
-			},
-			error:function(e){
+                    alert("successfully stored");
 
 
-				alert("there is a problem"+e);
+                },
+                error: function(e) {
 
 
-			}
+                    alert("there is a problem" + e);
 
 
-		});
+                }
 
 
- 		});
+            });
 
- 	});
+
+        });
+
+    });

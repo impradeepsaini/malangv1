@@ -45,7 +45,7 @@ function onPlayerStateChange(event) {
 
   if (event.data === 0) {
 
-    deleteprevious();
+    // deleteprevious();
     getajaxdata();
 
   }

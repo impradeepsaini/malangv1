@@ -18,12 +18,17 @@ from django.contrib import admin
 from songplay.views import index
 from songplay.views import search
 from songplay.views import add
+from songplay.views import vote,getTopRequestsJson,blankview
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^index/$',  index),
     url(r'^search/$',  search),
     url(r'^add/$',  add),      
+    url(r'^vote/$',  vote), 
+    url(r'^test/$',  getTopRequestsJson),
+    url(r'^test2/$',  blankview),      
     url('^', include('django.contrib.auth.urls')),
 
     

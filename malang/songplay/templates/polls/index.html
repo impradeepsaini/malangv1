@@ -27,15 +27,32 @@
 	</div>
 
 	 
-	 
 
 
-	{% for object in request_objects %}
+<div id='request-outermost-box' class="col-xs-9 " style=" ">
+
+	
+<div class="btn-group btn-group-justified" role="group" aria-label="...">
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-default" onclick="getTopJson()">Top</button>
+  </div>
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-default">New</button>
+  </div>
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-default">Best</button>
+  </div>
+</div>
+
+
+
+
+	<!-- {% for object in request_objects %}
 	 	
-		<hr>
-		
-		<div id='{{object.id}}' class='col-xs-12 outer-request-container' style="margin-top:20px">
+		<div id='{{object.id}}' class='col-xs-12 outer-request-container' style="margin-top:20px;">
 	    	
+
+
 	    	<div  class= 'col-xs-1 thumbnail-container' >
 	    	
 	    		<img src="http://img.youtube.com/vi/{{object.youtubeId}}/1.jpg"/>
@@ -47,7 +64,7 @@
 	    	
 	    	<div  class= 'col-xs-2 vote-container' >
 	    	
-	    		<div id="topic" class="upvote">
+	    		<div id="topic-{{object.id}}" data-id="{{object.id}}" class="upvote">
     			<a class="upvote"></a>
     			<span class="count">{{object.upvotes|sub:object.downvotes}}</span>
     			<a class="downvote"></a>
@@ -76,8 +93,8 @@
 		<br>
 		<br>
  
-	{% endfor %}
-
+	{% endfor %} -->
+</div>
 
 
 <div id="search-block" 
@@ -152,31 +169,33 @@ body.loading .modal {
 
 
 
-
-
-
-
 	</style>
 
+
+<a href="#" id="urlplaceholder">hello</a>
 
 {%endblock mystyle%}
 
  
 {%block jscript%}
 
-<script src="{% static "youtubejscript.js" %}"></script>
-<script src="{% static "songplay_automation.js" %}"></script>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="{% static 'y-search.js' %}"></script>
-<script src="{% static 'addrequest.js' %}"></script>
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="{% static "jquery.upvote.js" %}"></script>
 
-  
+<script src="{% static "voting.js" %}"></script>
+
+
+<script src="{% static "songplay_automation.js" %}"></script>
+<script src="{% static "youtubejscript.js" %}"></script>
+
+
+<script src="{% static "y-search.js" %}"></script>
+<script src="{% static "addrequest.js" %}"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
+ 
 {%endblock jscript%}
-
-
 
  
 <!--	<div><i class="fa fa-angle-up fa-2x" aria-hidden="true"></i></div> 

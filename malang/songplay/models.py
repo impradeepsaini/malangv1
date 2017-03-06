@@ -4,6 +4,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import default
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
 
 #every new song added to library
 
@@ -30,7 +34,10 @@ class Request(models.Model):
     upvotes = models.IntegerField()
     downvotes = models.IntegerField()
     youtubeId = models.CharField(max_length=120)
+    added = models.DateTimeField(auto_now_add=True)
     played = models.BooleanField(default=False)
+
+    
     
     def __str__(self):
         return self.song.name
@@ -47,12 +54,47 @@ class VoteRecord(models.Model):
     
     upvoted = models.BooleanField(default=False)
     downvoted = models.BooleanField(default=False)
+
+    up_difference  = models.IntegerField(default=0)
+    down_difference  = models.IntegerField(default=0)
     
     class Meta:
         unique_together = ('user', 'request',)
-        
+        # db_table = 'voterecord'    
+
     def __str__(self):
         return (self.user.username + '-' + self.request.song.name)
         
-        
-        
+
+
+@receiver(post_save, sender=VoteRecord, dispatch_uid="update_vote_count")
+def update_vote(sender, instance, **kwargs):
+     
+     r_current_upvotes = instance.request.upvotes
+     r_current_downvotes = instance.request.downvotes
+
+     print("r_current_dw")
+     print(r_current_downvotes)
+
+     up_difference  = instance.up_difference 
+     down_difference  = instance.down_difference 
+
+     print("updifference is-")
+     print(up_difference)
+
+     upvotes=r_current_upvotes+up_difference
+     downvotes=r_current_downvotes+down_difference
+
+
+     r = instance.request
+
+     print(r)
+
+     r.upvotes = upvotes
+     r.downvotes = downvotes
+     r.save()
+
+     #  
+     # Request.objects.filter(id=id).update(upvotes=upvotes ,downvotes=downvotes)
+     # 
+     return 1
