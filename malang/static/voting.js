@@ -11,10 +11,12 @@ function getTopJson() {
 
 
     $.ajax({
-        url: '/test/',
+        url: '/top/',
+        cache:false,
 
         success: function(data) {
 
+            console.log(data)
             handleRequestJson(data);
 
         },
@@ -27,8 +29,36 @@ function getTopJson() {
 }
 
 
+
+
+function getNewJson() {
+
+
+    $.ajax({
+        url: '/new/',
+        cache:false,
+
+        success: function(data) {
+
+            console.log(data)
+            handleRequestJson(data);
+
+        },
+
+        error: function(data) {
+            alert("error in getting data from server");
+        }
+    });
+
+}
+
+
+
+
+
 function handleRequestJson(data) {
 
+    $('#requests-container-finalbox').html("");
 
     $.each(data, function(index, value) {
 
@@ -88,8 +118,7 @@ function handleRequestJson(data) {
 
 
 
-        console.log(html_string);
-        $('body').append(html_string);
+        $('#requests-container-finalbox').append(html_string);
 
 
         var div_string = 'div#topic-' + data[index].id;

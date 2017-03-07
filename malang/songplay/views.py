@@ -19,6 +19,21 @@ def index(request):
     
     if request.method=='POST':
         
+
+        p = request.POST
+        played_song_id = p.get('id_played_request')
+
+        print("this is")
+        print(played_song_id)
+
+        if played_song_id:
+
+            played_song_r = Request.objects.get(id=played_song_id)
+
+
+            played_song_r.played = True
+            played_song_r.save()
+
       
         
         q = Request.objects.filter(played=False).order_by('-upvotes')[0]
@@ -26,8 +41,6 @@ def index(request):
         next_song_id = q.id   
         next_song_yid = q.youtubeId 
         
-        q.played = True
-        q.save()
         
         data = json.dumps([{"nextsong_pk": next_song_id, "nextsong_yid":next_song_yid}])
         return HttpResponse(data,  content_type='application/json')
@@ -79,6 +92,10 @@ def add(request):
 
 
 #send a vote for particular request
+#after vote is saved in VoteRecord, update vote count in Request
+
+
+
 @csrf_exempt
 def vote(request):
 
@@ -150,7 +167,7 @@ def vote(request):
               up_difference =  BooleanToInt(upvoted)
               down_difference = BooleanToInt(downvoted) 
               VoteRecord.objects.create(user=request.user,request=r,upvoted=upvoted,downvoted=downvoted,up_difference =up_difference,down_difference =down_difference)  
-            
+                
 
         
         # print(obj)
@@ -164,10 +181,7 @@ def vote(request):
 @csrf_exempt
 def getTopRequestsJson(request):
     
-    
-    
-     
-    
+      
     if request.method=='GET':
     
         request_objects = Request.objects.filter(played=False).extra(select={'offset': 'upvotes - downvotes'}).filter(Q(voterecord__user__username=request.user) | 
@@ -181,6 +195,32 @@ def getTopRequestsJson(request):
         # return render(request,"polls/index.html",{"request_objects":request_objects})
     
     return HttpResponse(data_json,content_type='application/json')
+
+
+
+
+@csrf_exempt
+def getNewRequestsJson(request):
+    
+      
+    if request.method=='GET':
+    
+        request_objects = Request.objects.filter(played=False).extra(select={'offset': 'upvotes - downvotes'}).filter(Q(voterecord__user__username=request.user) | 
+                               Q(voterecord__user__username=None)).order_by('-added').values('id','song__name','youtubeId','voterecord__upvoted','voterecord__downvoted','voterecord__user__username','offset')
+
+        data_dict = ValuesQuerySetToDict(request_objects)
+        data_json = json.dumps(data_dict)
+
+
+        print(data_json)
+        # return render(request,"polls/index.html",{"request_objects":request_objects})
+    
+    return HttpResponse(data_json,content_type='application/json')
+
+
+
+
+
 
 
 def ValuesQuerySetToDict(vqs):

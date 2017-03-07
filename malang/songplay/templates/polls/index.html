@@ -37,12 +37,14 @@
     <button type="button" class="btn btn-default" onclick="getTopJson()">Top</button>
   </div>
   <div class="btn-group" role="group">
-    <button type="button" class="btn btn-default">New</button>
+    <button type="button" class="btn btn-default" onclick="getNewJson()">New</button>
   </div>
   <div class="btn-group" role="group">
     <button type="button" class="btn btn-default">Best</button>
   </div>
 </div>
+
+<div id='requests-container-finalbox' > </div>
 
 
 
@@ -172,7 +174,7 @@ body.loading .modal {
 	</style>
 
 
-<a href="#" id="urlplaceholder">hello</a>
+<a href="#" id="urlplaceholder"></a>
 
 {%endblock mystyle%}
 

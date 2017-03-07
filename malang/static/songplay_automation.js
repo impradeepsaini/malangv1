@@ -6,7 +6,7 @@ var tobedeleted;
 
 
 var test = false;
-
+var test2 = false;
 
 // parseInt($(this).attr("id").substr(6))
 
@@ -14,6 +14,7 @@ var test = false;
 $(document).ready(
     function() {
         //ajax call to send vote status in backend
+         
         getajaxdata(handleYoutubeUrl);
 
 
@@ -24,13 +25,23 @@ $(document).ready(
 //get next highest upvoted song from backend
 function getajaxdata() {
 
-    // var new_url;
+    var id_played_request;
+
+    if(test2===true)   {id_played_request = $("#urlplaceholder").html();
+
+    $("#" + id_played_request + "> .request-container .song-title a").css("color", "red");
+
+
+  }
+    else              { id_played_request = null; test2 = true; }
 
     $.ajax({
         url: "/index/",
         type: "post",
 
         cache: 'false',
+
+        data: {"id_played_request":id_played_request}, 
 
         success: function(data) {
 
@@ -65,6 +76,8 @@ function handleYoutubeUrl(data) {
 
     new_url = "https://www.youtube.com/embed/" + nextsong_yid + "?enablejsapi=1";
 
+    setUrl(nextsong_id)
+
     if (test === false) {
         $("#myframe").attr("src", new_url);
         test = true;
@@ -78,8 +91,7 @@ function handleYoutubeUrl(data) {
 
     }
 
-    $("#" + nextsong_id + "> .request-container .song-title a").css("color", "red");
-
+    
 
 
 }
@@ -109,11 +121,11 @@ function getUrl() {
 
 
 
-// function setUrl(url){
+function setUrl(id){
 
-//   console.log(url);
-//   $("#myframe").attr("src", url);
-// }
+  console.log(id);
+  $("#urlplaceholder").html(id);
+}
 
 
 
